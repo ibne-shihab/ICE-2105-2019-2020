@@ -1,22 +1,15 @@
-import numpy as np
+def color_node(graph):
+    color_map = {}
+    for node in sorted(graph, key=lambda x: len(graph), reverse=True):
+        neighbours_colors = set(color_map.get(neigh) for neigh in graph[node])
+        color_map[node] = next(color for color in range(
+            len(graph)) if color not in neighbours_colors)
+    return color_map
 
-# Creating two 2D numpy arrays using the array() method
 
-# Consider the system of equations x0 + 2 * x1 = 1 and 3 * x0 + 5 * x1 = 2
-arr1 = np.array([[1, 2], [3, 5]])
-arr2 = np.array([1, 2])
+graph = {'a': list('bcdg'), 'b': list('acde'), 'c': list('abefg'),
+         'd': list('abeg'), 'e': list('bcdfgh'), 'f': list('ech'),
+         'g':list('daech'),'h':list('gef')
+         }
 
-# Display the arrays
-print("Array1...\n",arr1)
-print("\nArray2...\n",arr2)
-
-# Check the Dimensions of both the arrays
-print("\nDimensions of Array1...\n",arr1.ndim)
-print("\nDimensions of Array2...\n",arr2.ndim)
-
-# Check the Shape of both the arrays
-print("\nShape of Array1...\n",arr1.shape)
-print("\nShape of Array2...\n",arr2.shape)
-
-# To solve a linear matrix equation, use the numpy.linalg.solve() method in Python.
-print("\nResult...\n",np.linalg.solve(arr1, arr2))
+print(color_node(graph))
